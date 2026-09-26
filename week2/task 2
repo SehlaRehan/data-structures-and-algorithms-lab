@@ -1,0 +1,36 @@
+
+// ===== LAB TASK 2: Merge two lists into third =====
+Node* mergeTwoLists(Node* list1, Node* list2) {
+    Node* thirdFirst = NULL;
+    Node* thirdLast = NULL;
+
+    Node* p = list1;
+    while (p!= NULL) {
+        Node* newNode = new Node();
+        newNode->data = p->data;
+        newNode->next = NULL;
+        if (thirdFirst == NULL) thirdFirst = thirdLast = newNode;
+        else { thirdLast->next = newNode; thirdLast = newNode; }
+        p = p->next;
+    }
+
+    p = list2;
+    while (p!= NULL) {
+        Node* newNode = new Node();
+        newNode->data = p->data;
+        newNode->next = NULL;
+        if (thirdFirst == NULL) thirdFirst = thirdLast = newNode;
+        else { thirdLast->next = newNode; thirdLast = newNode; }
+        p = p->next;
+    }
+    return thirdFirst;
+}
+
+void displayList(Node* head){
+    Node* p = head;
+    while(p!=NULL){
+        cout << p->data << " -> ";
+        p = p->next;
+    }
+    cout << "NULL" << endl;
+}
