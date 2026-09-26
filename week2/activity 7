@@ -1,0 +1,94 @@
+#include <iostream>
+using namespace std;
+
+struct Nodetype
+{
+    int data;
+    Nodetype *next;
+};
+
+Nodetype *first = NULL;
+Nodetype *last = NULL;
+
+void insert_end(int value)
+{
+    Nodetype *p = new Nodetype;
+
+    p->data = value;
+    p->next = NULL;
+
+    if (first == NULL)
+    {
+        first = last = p;
+    }
+    else
+    {
+        last->next = p;
+        last = p;
+    }
+}
+
+void delete_last()
+{
+    Nodetype *q, *q1;
+
+    q1 = NULL;
+    q = first;
+
+    if (q == NULL)
+    {
+        cout << "Linked List is empty";
+    }
+    else
+    {
+        while (q != last)
+        {
+            q1 = q;
+            q = q->next;
+        }
+
+        if (q == first)
+        {
+            first = last = NULL;
+        }
+        else
+        {
+            q1->next = NULL;
+            last = q1;
+        }
+
+        delete q;
+
+        cout << "Last node deleted.";
+    }
+}
+
+void display()
+{
+    Nodetype *p = first;
+
+    while (p != NULL)
+    {
+        cout << p->data << " ";
+        p = p->next;
+    }
+}
+
+int main()
+{
+    insert_end(10);
+    insert_end(20);
+    insert_end(30);
+
+    cout << "Before deletion: ";
+    display();
+
+    cout << endl;
+
+    delete_last();
+
+    cout << "After deletion: ";
+    display();
+
+    return 0;
+}
