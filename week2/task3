@@ -1,0 +1,72 @@
+
+// ===== LAB TASK 3: Find multiple occurrences =====
+void findMultipleOccurrences(int key) {
+    Node* p = first;
+    int pos = 0;
+    int count = 0;
+    cout << "Occurrences of " << key << " at positions: ";
+    while (p!= NULL) {
+        if (p->data == key) {
+            cout << pos << " ";
+            count++;
+        }
+        p = p->next;
+        pos++;
+    }
+    if (count == 0) cout << "Not Found";
+    else cout << "\nTotal count: " << count;
+    cout << endl;
+}
+
+// Activity 8 from your image: Complete deletion
+void deleteAll() {
+    Node* p;
+    while (first!= NULL) {
+        p = first;
+        first = first->next;
+        delete(p);
+    }
+    last = NULL;
+    cout << "All nodes of Linked List will be deleted." << endl;
+}
+
+int main() {
+    // Create first list
+    insertAtEnd(10);
+    insertAtEnd(20);
+    insertAtEnd(30);
+    insertAtEnd(20);
+    insertAtEnd(40);
+
+    display();
+
+    // Task 1
+    displayReverseLoop();
+    displayReverseRecursiveWrapper();
+
+    // Task 3
+    findMultipleOccurrences(20);
+
+    // Task 2 - Merging demo
+    Node* list1 = NULL; Node* list1Last = NULL;
+    Node* list2 = NULL; Node* list2Last = NULL;
+
+    // list1: 1->2->3
+    for(int v : {1,2,3}){
+        Node* n = new Node{v, NULL};
+        if(!list1) list1 = list1Last = n; else { list1Last->next=n; list1Last=n; }
+    }
+    // list2: 4->5->6
+    for(int v : {4,5,6}){
+        Node* n = new Node{v, NULL};
+        if(!list2) list2 = list2Last = n; else { list2Last->next=n; list2Last=n; }
+    }
+
+    cout << "\nList1: "; displayList(list1);
+    cout << "List2: "; displayList(list2);
+    Node* merged = mergeTwoLists(list1, list2);
+    cout << "Merged List (Task 2): "; displayList(merged);
+
+    deleteAll();
+    return 0;
+}
