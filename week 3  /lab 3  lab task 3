@@ -1,0 +1,122 @@
+#include <iostream>
+using namespace std;
+
+struct SNode
+{
+    int data;
+    SNode *next;
+};
+
+struct DNode
+{
+    int data;
+    DNode *prev;
+    DNode *next;
+};
+
+SNode *sHead = NULL;
+DNode *dHead = NULL;
+DNode *dTail = NULL;
+
+void insertSingly(int value)
+{
+    SNode *newNode = new SNode;
+
+    newNode->data = value;
+    newNode->next = NULL;
+
+    if (sHead == NULL)
+    {
+        sHead = newNode;
+    }
+    else
+    {
+        SNode *temp = sHead;
+
+        while (temp->next != NULL)
+        {
+            temp = temp->next;
+        }
+
+        temp->next = newNode;
+    }
+}
+
+void displaySingly()
+{
+    SNode *temp = sHead;
+
+    while (temp != NULL)
+    {
+        cout << temp->data << " ";
+        temp = temp->next;
+    }
+
+    cout << endl;
+}
+
+void convertToDoubly()
+{
+    SNode *sTemp = sHead;
+
+    while (sTemp != NULL)
+    {
+        DNode *newNode = new DNode;
+
+        newNode->data = sTemp->data;
+        newNode->prev = NULL;
+        newNode->next = NULL;
+
+        if (dHead == NULL)
+        {
+            dHead = dTail = newNode;
+        }
+        else
+        {
+            newNode->prev = dTail;
+            dTail->next = newNode;
+            dTail = newNode;
+        }
+
+        sTemp = sTemp->next;
+    }
+}
+
+void displayDoubly()
+{
+    DNode *temp = dHead;
+
+    while (temp != NULL)
+    {
+        cout << temp->data << " ";
+        temp = temp->next;
+    }
+
+    cout << endl;
+}
+
+int main()
+{
+    int n, value;
+
+    cout << "Enter number of nodes: ";
+    cin >> n;
+
+    for (int i = 0; i < n; i++)
+    {
+        cout << "Enter value: ";
+        cin >> value;
+
+        insertSingly(value);
+    }
+
+    cout << "Singly Linked List: ";
+    displaySingly();
+
+    convertToDoubly();
+
+    cout << "Doubly Linked List: ";
+    displayDoubly();
+
+    return 0;
+}
