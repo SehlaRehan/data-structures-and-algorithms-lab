@@ -1,0 +1,109 @@
+#include <iostream>
+using namespace std;
+
+struct Node
+{
+    int data;
+    Node* next;
+};
+
+void insert(Node*& head, int value)
+{
+    Node* newNode = new Node;
+    newNode->data = value;
+    newNode->next = NULL;
+
+    if (head == NULL)
+    {
+        head = newNode;
+        return;
+    }
+
+    Node* temp = head;
+
+    while (temp->next != NULL)
+    {
+        temp = temp->next;
+    }
+
+    temp->next = newNode;
+}
+
+void display(Node* head)
+{
+    Node* temp = head;
+
+    while (temp != NULL)
+    {
+        cout << temp->data << " ";
+        temp = temp->next;
+    }
+
+    cout << endl;
+}
+
+void deleteEvenOdd(Node*& head, int choice)
+{
+    // Delete from beginning
+    while (head != NULL &&
+          ((choice == 1 && head->data % 2 == 0) ||
+           (choice == 2 && head->data % 2 != 0)))
+    {
+        Node* temp = head;
+        head = head->next;
+        delete temp;
+    }
+
+    if (head == NULL)
+        return;
+
+    Node* current = head;
+
+    while (current->next != NULL)
+    {
+        if ((choice == 1 && current->next->data % 2 == 0) ||
+            (choice == 2 && current->next->data % 2 != 0))
+        {
+            Node* temp = current->next;
+            current->next = current->next->next;
+            delete temp;
+        }
+        else
+        {
+            current = current->next;
+        }
+    }
+}
+
+int main()
+{
+    Node* head = NULL;
+
+    int n, value, choice;
+
+    cout << "Enter number of nodes: ";
+    cin >> n;
+
+    for (int i = 0; i < n; i++)
+    {
+        cout << "Enter value: ";
+        cin >> value;
+
+        insert(head, value);
+    }
+
+    cout << "\nOriginal Linked List: ";
+    display(head);
+
+    cout << "\n1. Delete Even Values";
+    cout << "\n2. Delete Odd Values";
+    cout << "\nEnter choice: ";
+    cin >> choice;
+
+    deleteEvenOdd(head, choice);
+
+    cout << "\nAfter Deletion: ";
+    display(head);
+
+    return 0;
+}
