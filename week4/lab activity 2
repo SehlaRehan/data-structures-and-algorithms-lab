@@ -1,0 +1,74 @@
+#include <iostream>
+using namespace std;
+
+struct Node
+{
+    int data;
+    Node* next;
+};
+
+int main()
+{
+    Node* head = NULL;
+    Node* last = NULL;
+
+    int n, k;
+
+    cout << "Enter number of nodes: ";
+    cin >> n;
+
+    cout << "Enter counting value: ";
+    cin >> k;
+
+    // Create circular linked list
+    for (int i = 1; i <= n; i++)
+    {
+        Node* newNode = new Node;
+        newNode->data = i;
+
+        if (head == NULL)
+        {
+            head = newNode;
+            last = newNode;
+            newNode->next = head;
+        }
+        else
+        {
+            newNode->next = head;
+            last->next = newNode;
+            last = newNode;
+        }
+    }
+
+    Node* current = head;
+    Node* previous = last;
+
+    while (current->next != current)
+    {
+        // Move k-1 positions
+        for (int count = 1; count < k; count++)
+        {
+            previous = current;
+            current = current->next;
+        }
+
+        cout << "Deleted: " << current->data << endl;
+
+        previous->next = current->next;
+
+        if (current == head)
+        {
+            head = current->next;
+        }
+
+        delete current;
+
+        current = previous->next;
+    }
+
+    cout << "\nSurvivor: " << current->data << endl;
+
+    delete current;
+
+    return 0;
+}
