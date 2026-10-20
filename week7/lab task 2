@@ -1,0 +1,9 @@
+void postorder(Node* root)
+{
+    if (root == NULL)
+        return;
+
+    postorder(root->right);     // Right
+    postorder(root->left);      // Left
+    cout << root->data << " ";  // Node
+}
