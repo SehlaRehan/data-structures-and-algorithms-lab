@@ -1,0 +1,9 @@
+void inorder(Node* root)
+{
+    if (root == NULL)
+        return;
+
+    inorder(root->right);       // Right
+    cout << root->data << " ";  // Node
+    inorder(root->left);        // Left
+}
